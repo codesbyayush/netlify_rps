@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Rock from "./Rock";
 import Paper from "./Paper";
 import Scissor from "./Scissor";
 import "./styless.css";
 import { useLocation, Link } from "react-router-dom";
 
-export default function Selected({ setscore}) {
-  const location = useLocation();
-  const userChoice = location.state.from;
+export default function Selected({ setScore , comChoice}) {
 
-  const options = ["rock", "paper", "scissor"];
-  const comChoice = options[Math.floor(Math.random() * 3)];
+  const location = useLocation();
+  const userChoice = location.state.from;  
 
   let res = "";
+  
   if (comChoice === userChoice) {
     res = "draw"
   } else if (
-    (comChoice === "rock" && userChoice === "paper")||(comChoice === "paper" && userChoice === "scissor")||(comChoice === "scissor" && userChoice === "rock")
+    (comChoice === "rock" && userChoice === "paper")||
+    (comChoice === "paper" && userChoice === "scissor")||
+    (comChoice === "scissor" && userChoice === "rock")
   ) {
     res = "win";
   } else {
@@ -24,11 +25,13 @@ export default function Selected({ setscore}) {
   }
 
   useEffect(() => {
+
     if (res === "win") {
-      setscore((prev) => prev + 1);
+      setScore((prev) => prev + 1);
     } else if(res === "lose") {
-      setscore((prev) => prev - 1);
+      setScore((prev) => prev - 1);
     }
+
   }, []);
 
   return (
