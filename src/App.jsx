@@ -6,16 +6,25 @@ import Selected from "./components/Selected.jsx";
 
 import {Route, Routes } from "react-router-dom";
 import HelpPortal from "./components/HelpPortal";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 
 function App() {
 
   const [score, setScore] = useState(0);
   const [open, setOpen] = useState(true);
+  const [comChoice, setComChoice] = useState("");
+
+  const options = ["rock", "paper", "scissor"];
 
   const modal = () => {
     setOpen(!open);
   }
+
+
+  useEffect(() => {
+
+    setComChoice(options[Math.floor(Math.random() * 3)])
+  },[])
 
   
 
@@ -25,7 +34,7 @@ function App() {
         <Header  score={score}/>
         <Routes>
           <Route path="/" element={<StartGame/>}/>
-          <Route path="/Selected" element={<Selected setscore={setScore}/>}/>
+          <Route path="/Selected" element={<Selected setScore={setScore} comChoice={comChoice}/>}/>
         </Routes>
       </div>
 
